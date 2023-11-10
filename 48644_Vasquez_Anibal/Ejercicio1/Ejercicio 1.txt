@@ -1,0 +1,66 @@
+const int LED1 = 9;
+const int LED2 = 10;
+const int PULSADOR1 = 2;
+const int PULSADOR2 = 3;
+const int PULSADOR3 = 4;
+
+int brilloLED1 = 0;
+int brilloLED2 = 0;
+int ledActual = LED1;
+
+void setup() {
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(PULSADOR1, INPUT_PULLUP);
+  pinMode(PULSADOR2, INPUT_PULLUP);
+  pinMode(PULSADOR3, INPUT_PULLUP);
+}
+
+void loop() {
+  if (digitalRead(PULSADOR1) == LOW) {
+    incrementarBrillo();
+  }
+
+  if (digitalRead(PULSADOR2) == LOW) {
+    decrementarBrillo();
+  }
+
+  if (digitalRead(PULSADOR3) == LOW) {
+    cambiarLED();
+    delay(200);
+  }
+}
+
+void incrementarBrillo() {
+  if (ledActual == LED1 && brilloLED1 < 255) {
+    brilloLED1++;
+    analogWrite(LED1, brilloLED1);
+  } else if (ledActual == LED2 && brilloLED2 < 255) {
+    brilloLED2++;
+    analogWrite(LED2, brilloLED2);
+  }
+  delay(10);
+}
+
+void decrementarBrillo() {
+  if (ledActual == LED1 && brilloLED1 > 0) {
+    brilloLED1--;
+    analogWrite(LED1, brilloLED1);
+  } else if (ledActual == LED2 && brilloLED2 > 0) {
+    brilloLED2--;
+    analogWrite(LED2, brilloLED2);
+  }
+  delay(10);
+}
+
+void cambiarLED() {
+  if (ledActual == LED1) {
+    ledActual = LED2;
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, HIGH);
+  } else if (ledActual == LED2) {
+    ledActual = LED1;
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+  }
+}

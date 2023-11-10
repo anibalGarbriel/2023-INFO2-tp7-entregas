@@ -1,0 +1,34 @@
+const int ledPin1 = 13; // Pin para el primer LED
+const int ledPin2 = 12; // Pin para el segundo LED
+const int buttonPin1 = 2; // Pin para el primer pulsador
+const int buttonPin2 = 3; // Pin para el segundo pulsador
+
+int buttonState1 = 0; // Variable para almacenar el estado del primer pulsador
+int buttonState2 = 0; // Variable para almacenar el estado del segundo pulsador
+
+void setup() {
+  pinMode(ledPin1, OUTPUT); // Configura el pin del primer LED como salida
+  pinMode(ledPin2, OUTPUT); // Configura el pin del segundo LED como salida
+  pinMode(buttonPin1, INPUT); // Configura el pin del primer pulsador como entrada
+  pinMode(buttonPin2, INPUT); // Configura el pin del segundo pulsador como entrada
+}
+
+void loop() {
+  // Lee el estado del primer pulsador
+  buttonState1 = digitalRead(buttonPin1);
+
+  // Si el primer pulsador se presiona, enciende o apaga el primer LED
+  if (buttonState1 == HIGH) {
+    digitalWrite(ledPin1, !digitalRead(ledPin1));
+    delay(250); // Agrega un pequeño retardo para evitar rebotes
+  }
+
+  // Lee el estado del segundo pulsador
+  buttonState2 = digitalRead(buttonPin2);
+
+  // Si el segundo pulsador se presiona, enciende o apaga el segundo LED
+  if (buttonState2 == HIGH) {
+    digitalWrite(ledPin2, !digitalRead(ledPin2));
+    delay(250); // Agrega un pequeño retardo para evitar rebotes
+  }
+}

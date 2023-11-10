@@ -1,0 +1,88 @@
+boolean estadoL1 = false; // Estado inicial del LED L1 (apagado)
+boolean estadoL2 = false; // Estado inicial del LED L2 (apagado)
+boolean clicEnBoton1 = false; // Variable para rastrear si se hizo clic en el botón E1
+boolean clicEnBoton2 = false; // Variable para rastrear si se hizo clic en el botón E2
+
+int colorOriginalE1; // Color original del botón E1
+int colorOriginalE2; // Color original del botón E2
+
+void setup() {
+  size(800, 400); // Tamaño de la ventana más grande
+  textSize(16);
+
+  // Almacena los colores originales de los botones
+  colorOriginalE1 = color(200);
+  colorOriginalE2 = color(200);
+}
+
+void draw() {
+  background(255);
+
+  // Dibuja las etiquetas "Entradas" y "Salidas"
+  fill(0);
+  text("Entradas", width * 0.27, height * 0.4);
+  text("Salidas", width * 0.27, height * 0.66);
+
+  // Calcula el tamaño de los botones y LEDs de manera proporcional
+  float buttonWidth = width * 0.1;
+  float buttonHeight = height * 0.1;
+  float buttonX1 = width * 0.4;
+  float buttonX2 = width * 0.5;
+  float buttonY = height * 0.35;
+
+  // Dibuja el rectángulo del botón E1
+  fill(clicEnBoton1 ? color(100) : colorOriginalE1); // Cambia a gris oscuro si está seleccionado
+  rect(buttonX1, buttonY, buttonWidth, buttonHeight);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text("E1", buttonX1 + buttonWidth / 2, buttonY + buttonHeight / 2);
+
+  // Dibuja el rectángulo del botón E2
+  fill(clicEnBoton2 ? color(100) : colorOriginalE2); // Cambia a gris oscuro si está seleccionado
+  rect(buttonX2, buttonY, buttonWidth, buttonHeight);
+  fill(0);
+  text("E2", buttonX2 + buttonWidth / 2, buttonY + buttonHeight / 2);
+
+  // Calcula el tamaño de los LEDs de manera proporcional
+  float ledSize = min(buttonWidth, buttonHeight) * 0.8;
+  float ledX1 = width * 0.4 + buttonWidth / 2; // Centra el LED L1 bajo el botón E1
+  float ledX2 = width * 0.5 + buttonWidth / 2; // Centra el LED L2 bajo el botón E2
+
+  // Dibuja el LED L1
+  fill(estadoL1 ? color(0, 255, 0) : color(255, 0, 0));
+  ellipse(ledX1, height * 0.65, ledSize, ledSize); // LED L1
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text("L1", ledX1, height * 0.65);
+
+  // Dibuja el LED L2
+  fill(estadoL2 ? color(0, 255, 0) : color(255, 0, 0));
+  ellipse(ledX2, height * 0.65, ledSize, ledSize); // LED L2
+  fill(255);
+  text("L2", ledX2, height * 0.65);
+}
+
+void mousePressed() {
+  float buttonWidth = width * 0.1;
+  float buttonHeight = height * 0.1;
+  float buttonX1 = width * 0.4;
+  float buttonX2 = width * 0.5;
+  float buttonY = height * 0.35;
+
+  if (mouseX > buttonX1 && mouseX < buttonX1 + buttonWidth) {
+    if (mouseY > buttonY && mouseY < buttonY + buttonHeight) {
+      estadoL1 = !estadoL1;
+      clicEnBoton1 = !clicEnBoton1; // Invierte el estado del botón E1
+      colorOriginalE1 = clicEnBoton1 ? color(100) : color(200); // Actualiza el color original de E1
+    }
+  } else if (mouseX > buttonX2 && mouseX < buttonX2 + buttonWidth) {
+    if (mouseY > buttonY && mouseY < buttonY + buttonHeight) {
+      estadoL2 = !estadoL2;
+      clicEnBoton2 = !clicEnBoton2; // Invierte el estado del botón E2
+      colorOriginalE2 = clicEnBoton2 ? color(100) : color(200); // Actualiza el color original de E2
+    }
+  } else {
+    clicEnBoton1 = false; // Deselecciona el botón E1
+    clicEnBoton2 = false; // Deselecciona el botón E2
+  }
+}
